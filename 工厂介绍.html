@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工厂介绍</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #bbb 1px solid;
+            text-align: center;
+        }
+        .main-content {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .text-content {
+            flex: 1;
+            padding: 20px;
+            background: #fff;
+            margin-right: 20px;
+            border-radius: 5px;
+        }
+        .text-content video {
+            width: 100%;
+            border-radius: 5px;
+        }
+        .image-slider {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+        }
+        .image-slider img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .image-slider img.active {
+            opacity: 1;
+        }
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>工厂名称</h1>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="text-content">
+                <h2>工厂简介</h2>
+                <p>
+                    欢迎来到我们工厂。我们是一家专注于高品质产品制造的企业，致力于提供最好的服务和解决方案。
+                </p>
+                <h2>视频介绍</h2>
+                <video controls>
+                    <source src="factory-intro.mp4" type="video/mp4">
+                    您的浏览器不支持视频标签。
+                </video>
+                <h2>图片展示</h2>
+                <div class="image-slider">
+                    <img src="factory1.jpg" class="active">
+                    <img src="factory2.jpg">
+                    <img src="factory3.jpg">
+                </div>
+                <h2>特色</h2>
+                <ul>
+                    <li>高端设备</li>
+                    <li>专业团队</li>
+                    <li>严格质量控制</li>
+                    <li>及时交货</li>
+                </ul>
+                <h2>联系我们</h2>
+                <p>
+                    地址: [工厂地址]<br>
+                    电话: [电话号码]<br>
+                    邮箱: [电子邮件地址]
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 工厂名称. 保留所有权利。</p>
+    </footer>
+
+    <audio id="background-music" src="background-music.mp3" type="audio/mp3" loop autoplay></audio>
+
+    <script>
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.image-slider img');
+        const totalImages = images.length;
+
+        function changeImage() {
+            images[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % totalImages;
+            images[currentIndex].classList.add('active');
+        }
+
+        setInterval(changeImage, 3000); // 每3秒切换一次图片
+    </script>
+</body>
+</html>
