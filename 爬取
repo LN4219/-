@@ -1,0 +1,65 @@
+import pyttsx3  # 导入文字转语音库
+import requests  # 发送 HTTP 请求库
+from bs4 import BeautifulSoup  # 用于从 HTML 或 XML 中提取数据
+
+# 获取用户输入的文章 URL
+url = str("https://www.skj520.com/a/63559/63559356/14331952.html")
+
+# 从网页中提取文章内容
+def content(url):
+    try:
+      res = requests.get(url,timeout=10)  # 发送 GET 请求获取网页内容
+      res.raise_for_status()
+      soup = BeautifulSoup(res.text, 'html.parser')  # 使用 BeautifulSoup 解析 HTML
+    except requests.exceptions.RequestException as e:
+      print("URL请求超时",e)
+
+    #print(soup)
+    articles = []
+    for i in range(len(soup.select('.showtxt'))):
+        article = soup.select('.showtxt')[i].getText().strip()  # 提取指定类名的段落内容
+        articles.append(article)
+    contents = " ".join(articles)  # 将所有段落内容拼接成一个字符串
+
+    return contents
+
+# 初始化 pyttsx3 引擎
+'''
+engine = pyttsx3.init('sapi5')
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[0].id)
+'''
+# 播放语音函数
+'''
+def speak(audio):
+    engine.say(audio)
+    engine.runAndWait()
+'''
+# 获取文章内容并转换为语音
+
+contents = content(url)
+contents = contents.replace('  ','\n')
+
+subtx = contents.splitlines()
+
+short_string =46
+lines = []
+
+def substr(text,short_string):
+  for line in text:
+    if len(line) <= short_string:
+      lines.append(line)
+      #break
+    else:
+      while len(line) >= short_string:
+        lines.append(line[:short_string])
+        line = line[short_string:]
+      lines.append(line)
+  return '\n'.join(lines)
+wrapped_string = substr(subtx,short_string)
+# 打印控制长度后的字符串
+print(wrapped_string)## 如果需要查看内容
+
+
+#engine.save_to_file
+#engine.runAndWait() ## 如果需要将文章保存为音频文件
